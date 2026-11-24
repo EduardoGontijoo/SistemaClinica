@@ -1,30 +1,41 @@
 # Sistema de Gerenciamento de Clínica
 
-## Sobre o projeto
+## Identificação
 
-O Sistema de Gerenciamento de Clínica é uma aplicação desktop desenvolvida em Java, utilizando JavaFX para a interface gráfica e MySQL para o armazenamento dos dados.
+- **Aluno:** Eduardo Gontijo
+- **Disciplina:** Estrutura de Dados 2
+- **Professora:** Karla
 
-O sistema tem como objetivo organizar o atendimento de pacientes, controlar filas de espera e facilitar o gerenciamento de médicos e consultas.
+## 1. Sobre o projeto
 
-## Funcionalidades
+O Sistema de Gerenciamento de Clínica é uma aplicação desktop desenvolvida em Java, com interface gráfica JavaFX e banco de dados MySQL.
 
-- Login com diferentes tipos de usuário.
-- Cadastro, consulta e exclusão de médicos.
+O objetivo do projeto é organizar o atendimento de uma clínica médica, permitindo o cadastro de médicos e pacientes, a emissão de senhas, o gerenciamento das filas de espera e o acompanhamento dos atendimentos.
+
+## 2. Funcionalidades
+
+- Login de administrador, médicos e pacientes.
+- Cadastro de médicos e associação com especialidades e consultórios.
 - Cadastro de pacientes.
 - Emissão de senhas normais e prioritárias.
-- Organização da fila de atendimento.
-- Chamada do próximo paciente.
-- Finalização de atendimentos.
+- Organização da fila conforme as regras de prioridade.
+- Consulta da fila de espera por especialidade.
+- Chamada do próximo paciente pelo médico.
+- Finalização e registro dos atendimentos.
 - Consulta ao histórico de atendimentos.
-- Armazenamento dos dados no MySQL.
+- Armazenamento das informações no MySQL.
 
-## Tipos de usuário
+## 3. Tipos de usuários
 
-- **Administrador:** gerencia os médicos cadastrados.
-- **Médico:** visualiza a fila, chama pacientes e finaliza atendimentos.
-- **Paciente:** realiza seu cadastro e emite uma senha para atendimento.
+**Administrador:** responsável pelo gerenciamento dos médicos e consultórios.
 
-## Especialidades
+**Médico:** pode visualizar a fila de sua especialidade, chamar pacientes, finalizar atendimentos e consultar o histórico.
+
+**Paciente:** pode realizar seu cadastro e solicitar uma senha para atendimento.
+
+## 4. Especialidades disponíveis
+
+O sistema possui cinco especialidades:
 
 - Clínica Geral
 - Pediatria
@@ -32,11 +43,35 @@ O sistema tem como objetivo organizar o atendimento de pacientes, controlar fila
 - Cardiologia
 - Psiquiatria
 
-## Prioridades de atendimento
+Cada especialidade pode possuir até três médicos, com consultórios associados.
 
-O sistema organiza os atendimentos considerando as categorias prioritárias cadastradas, respeitando a ordem de prioridade implementada no projeto.
+## 5. Regras de prioridade
 
-## Tecnologias utilizadas
+O sistema organiza os pacientes de acordo com a seguinte ordem de prioridade:
+
+1. Idosos com 80 anos ou mais.
+2. Idosos com 60 anos ou mais.
+3. Pessoas com deficiência (PCD).
+4. Gestantes.
+5. Pessoas com obesidade.
+6. Crianças de colo.
+7. Atendimento normal.
+
+Quando existem pacientes de diferentes categorias na fila, o sistema considera essa ordem para realizar as chamadas. Pacientes sem prioridade são atendidos depois dos prioritários.
+
+## 6. Estruturas de dados utilizadas
+
+Durante o desenvolvimento foram utilizadas estruturas de dados da linguagem Java para organizar e manipular as informações.
+
+- **ArrayList:** utilizado para armazenar e percorrer coleções de elementos.
+- **List:** utilizado para representar listas de informações, como registros e atendimentos.
+- **Map:** utilizado para relacionar informações por meio de chaves e valores.
+- **LinkedHashMap:** utilizado para armazenar informações mantendo a ordem de inserção.
+- **HashMap:** utilizado para armazenar associações entre elementos, como especialidades e índices.
+
+Essas estruturas auxiliam no gerenciamento dos médicos, pacientes, senhas e atendimentos.
+
+## 7. Tecnologias utilizadas
 
 - Java
 - JavaFX
@@ -44,31 +79,62 @@ O sistema organiza os atendimentos considerando as categorias prioritárias cada
 - JDBC
 - Maven
 - IntelliJ IDEA
+- Git e GitHub
 
-## Banco de dados
+## 8. Banco de dados
 
-O projeto utiliza o banco de dados MySQL chamado `sistema_clinica`.
+O projeto utiliza o MySQL para armazenar os dados da aplicação.
 
-Para executar o sistema, é necessário criar o banco de dados e configurar a conexão no arquivo `ConexaoMySQL.java`.
+As principais tabelas são:
 
-**Importante:** não publique senhas reais do banco de dados no GitHub.
+- `medicos`: armazena os dados dos médicos.
+- `pacientes`: armazena os dados dos pacientes.
+- `senhas`: registra as senhas emitidas e seus respectivos status.
+- `atendimentos`: registra os atendimentos realizados.
 
-## Como executar o projeto
+O arquivo `sistema_clinica.sql`, disponível na raiz do projeto, contém o script de criação do banco de dados e das tabelas.
 
-1. Instale o JDK compatível com o projeto.
-2. Instale o MySQL Server.
-3. Crie o banco de dados `sistema_clinica`.
-4. Configure as credenciais de conexão no projeto.
-5. Abra o projeto no IntelliJ IDEA.
+## 9. Como executar o projeto
+
+### Pré-requisitos
+
+- JDK compatível com a versão configurada no projeto.
+- IntelliJ IDEA.
+- Maven.
+- MySQL Server.
+
+### Instalação
+
+1. Clone o repositório do GitHub.
+2. Abra o projeto no IntelliJ IDEA.
+3. Configure o MySQL.
+4. Execute o script `sistema_clinica.sql` para criar o banco e as tabelas, caso esteja configurando uma instalação nova.
+5. Configure os dados de conexão com o banco no arquivo `ConexaoMySQL.java`.
 6. Aguarde o Maven carregar as dependências.
-7. Execute a classe `LoginView`.
 
-## Estrutura do projeto
+### Execução
 
-- `model`: classes que representam os dados do sistema.
-- `service`: regras de negócio, conexão e persistência.
-- `view`: telas e interface gráfica.
+No terminal do IntelliJ, execute:
 
-## Autor
+```bash
+mvn javafx:run
+```
 
-Desenvolvido por Eduardo Gontijo.
+A aplicação será iniciada pela tela de login.
+
+## 10. Imagens do sistema
+
+As imagens das telas da aplicação serão adicionadas nesta seção.
+
+Sugestão de imagens:
+
+- Tela de login.
+- Tela do administrador.
+- Tela de cadastro de pacientes.
+- Tela do médico com a fila de espera.
+- Tela de histórico de atendimentos.
+
+## 11. Autor
+
+**Eduardo Gontijo**
+
