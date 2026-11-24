@@ -37,3 +37,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# Arquivos locais do sistema
+.idea/
+dados_clinica/
