@@ -12,6 +12,10 @@ public class SistemaSenhas {
 
     private final FilaSenhas fila = new FilaSenhas();
 
+    public void definirProximaSenha(int numero) {
+        fila.definirProximaSenha(numero);
+    }
+
     public Senha emitirSenhaNormal(Paciente paciente) {
         Objects.requireNonNull(paciente, "Paciente obrigatório.");
 

@@ -13,8 +13,13 @@ public class FilaSenhas {
 
     private final ArrayList<Senha> senhas = new ArrayList<>();
 
-    private int proximaSenhaNormal = 1;
-    private int proximaSenhaPrioritaria = 1;
+    private int proximaSenha = 1;
+
+    public void definirProximaSenha(int numero) {
+        if (numero > proximaSenha) {
+            proximaSenha = numero;
+        }
+    }
 
     public void adicionarSenha(Senha senha) {
         if (senha == null) {
@@ -34,27 +39,19 @@ public class FilaSenhas {
 
         senhas.add(senha);
 
-        int numero = senha.getNumero();
-
-        if ("N".equals(senha.getTipo())
-                && numero >= proximaSenhaNormal) {
-            proximaSenhaNormal = numero + 1;
-        }
-
-        if ("P".equals(senha.getTipo())
-                && numero >= proximaSenhaPrioritaria) {
-            proximaSenhaPrioritaria = numero + 1;
+        if (senha.getNumero() >= proximaSenha) {
+            proximaSenha = senha.getNumero() + 1;
         }
     }
 
     public Senha gerarSenhaNormal() {
-        Senha senha = new Senha(proximaSenhaNormal, "N");
+        Senha senha = new Senha(proximaSenha, "N");
         adicionarSenha(senha);
         return senha;
     }
 
     public Senha gerarSenhaPrioritaria() {
-        Senha senha = new Senha(proximaSenhaPrioritaria, "P");
+        Senha senha = new Senha(proximaSenha, "P");
         adicionarSenha(senha);
         return senha;
     }

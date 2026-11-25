@@ -169,6 +169,11 @@ public class PacienteView {
 
         try {
 
+            // Consulta o banco antes de gerar a próxima senha.
+            int proximoNumero = SenhasPersistencia.proximoNumero();
+
+            sistema.definirProximaSenha(proximoNumero);
+
             Senha senha = sistema.emitirSenha(paciente);
 
             int pacienteId = PacientesPersistencia.salvar(

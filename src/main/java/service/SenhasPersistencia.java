@@ -16,6 +16,22 @@ import java.util.Map;
 
 public class SenhasPersistencia {
 
+    public static int proximoNumero() throws SQLException {
+
+        String sql = "SELECT COALESCE(MAX(numero), 0) + 1 AS proximo FROM senhas";
+
+        try (Connection conexao = ConexaoMySQL.conectar();
+             PreparedStatement comando = conexao.prepareStatement(sql);
+             ResultSet resultado = comando.executeQuery()) {
+
+            if (resultado.next()) {
+                return resultado.getInt("proximo");
+            }
+        }
+
+        return 1;
+    }
+
     public static int salvar(
             int pacienteId,
             Paciente paciente,
@@ -58,7 +74,6 @@ public class SenhasPersistencia {
             Map<Senha, String> dadosFila
     ) throws SQLException {
 
-        // Evita carregar a mesma fila duas vezes.
         if (!sistema.consultarFila().isEmpty()) {
             return;
         }
@@ -118,21 +133,14 @@ public class SenhasPersistencia {
                 String tipo = resultado.getString("tipo");
 
                 Paciente paciente = new Paciente(
-                        nome,
-                        idade,
-                        deficiencia,
-                        gestante,
-                        obesidade,
-                        crianca
+                        nome, idade, deficiencia,
+                        gestante, obesidade, crianca
                 );
 
                 sistema.recuperarSenha(paciente, numero, tipo);
 
                 List<Senha> senhas = sistema.consultarFila();
-
                 Senha senha = senhas.get(senhas.size() - 1);
-
-                senha.setPaciente(paciente);
 
                 String registro =
                         codificar(nome) + "|"
